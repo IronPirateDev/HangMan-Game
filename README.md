@@ -30,7 +30,6 @@ This project is licensed under the MIT License.
 
 ## 🙌 Acknowledgements
 Random Word API for providing random words.
-### 🙏Thanking Harshit Bisht for suggesting an update in the game🙏
 ## 🤝 Contributing
 If you'd like to contribute, please fork the repository and create a pull request.
 
