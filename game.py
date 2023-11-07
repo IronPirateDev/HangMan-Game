@@ -6,15 +6,18 @@ def choose_word():
     word = response.json()[0]
     return word
 
-def display_word(word, guessed_letters):
+def display_word(word, guessed_letters, revealed_letters):
     display = ""
     for letter in word:
-        if letter in guessed_letters:
+        if letter in guessed_letters or letter in revealed_letters:
             display += letter + " "
         else:
             display += "_ "
     return display.strip()
-
+def randomly_reveal_letters(word):
+    num_to_reveal = random.randint(1, len(word)//2)  # You can adjust the number of letters to reveal
+    revealed_letters = random.sample(word, num_to_reveal)
+    return revealed_letters
 def draw_hangman(attempts):
     stages = [
         """
@@ -81,17 +84,14 @@ def play_hangman():
     word_to_guess = choose_word()
     guessed_letters = []
     attempts = 6
-
     print("Welcome to Hangman!")
-    print(display_word(word_to_guess, guessed_letters))
-
+    revealed_letters = randomly_reveal_letters(word_to_guess)
+    print(display_word(word_to_guess, guessed_letters, revealed_letters))
     while attempts > 0:
         guess = input("Guess a letter: ").lower()
-
         if len(guess) != 1 or not guess.isalpha():
             print("Invalid input. Please enter a single letter.")
             continue
-
         if guess in guessed_letters:
             print("You already guessed that letter.")
             continue
@@ -104,7 +104,7 @@ def play_hangman():
 
             print(f"Wrong guess! Attempts remaining: {attempts}")
         
-        current_display = display_word(word_to_guess, guessed_letters)
+        current_display = display_word(word_to_guess, guessed_letters, revealed_letters)
         print(current_display)
 
         if "_" not in current_display:
